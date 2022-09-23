@@ -1,0 +1,24 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  simple_deployment_pipeline:
+
+    # set up virtual env for CI
+    runs-on: ubuntu-20.04 # use ubuntu VM for running CI
+    steps:
+    # uses: tells the workflow to run a specific action (reusable piece of code)
+      - uses: actions/checkout@v3 # checks out project source code from GIT
+      - uses: actions/setup-node@v3 # set up node to run commands in package.json
+        with:
+          node-version: '16'
+      - name: npm install
+        run: npm install # install dependencies of app
+
+    # lint code
+      - name: lint
+        run: npm run eslint
